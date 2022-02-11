@@ -1,0 +1,75 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Program Files/MATLAB/R2019b
+startdir = C:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/src/bin
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\codegen\mex\fbstab_mpc" -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\src\bin" -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\codegen\mex\fbstab_mpc\interface" -I "C:\Program Files\MATLAB\R2019b\extern\include" -I "C:\Program Files\MATLAB\R2019b\simulink\include" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src\ext_mode\common" -I "C:\Program Files\MATLAB\R2019b\rtw\c\ert" -I "." -DMODEL=fbstab_mpc_mex -DHAVESTDIO -DUSE_RTMODEL -D__USE_MINGW_ANSI_STDIO=1  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\codegen\mex\fbstab_mpc" -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\src\bin" -I "C:\Users\tskib\OneDrive\PhD\Research\Matlab\MoWiTO_mpc_matlab\fbstab-matlab-master\codegen\mex\fbstab_mpc\interface" -I "C:\Program Files\MATLAB\R2019b\extern\include" -I "C:\Program Files\MATLAB\R2019b\simulink\include" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src\ext_mode\common" -I "C:\Program Files\MATLAB\R2019b\rtw\c\ert" -I "." -DMODEL=fbstab_mpc_mex -DHAVESTDIO -DUSE_RTMODEL -D__USE_MINGW_ANSI_STDIO=1  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Program Files\MATLAB\R2019b\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -o "fbstab_mpc_mex.mexw64" -L"$matlabdir\extern\lib\win64\mingw64" -llibmwblas -llibemlrt -llibcovrt -llibut -llibmwmathutil  -Wl,--version-script,fbstab_mpc_mex.map
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/rt_nonfinite.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/rt_nonfinite.c
+build $builddir/fbstab_mpc_mexutil.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc_mexutil.c
+build $builddir/fbstab_mpc_data.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc_data.c
+build $builddir/fbstab_mpc_initialize.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc_initialize.c
+build $builddir/fbstab_mpc_terminate.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc_terminate.c
+build $builddir/fbstab_mpc.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc.c
+build $builddir/eml_int_forloop_overflow_check.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/eml_int_forloop_overflow_check.c
+build $builddir/CondensedMpcData.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/CondensedMpcData.c
+build $builddir/mtimes.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/mtimes.c
+build $builddir/ImplicitConjugateGradient.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/ImplicitConjugateGradient.c
+build $builddir/CondensedFeasibility.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/CondensedFeasibility.c
+build $builddir/CondensedResidual.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/CondensedResidual.c
+build $builddir/CondensedVariable.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/CondensedVariable.c
+build $builddir/FBstabAlgorithm.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/FBstabAlgorithm.c
+build $builddir/norm.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/norm.c
+build $builddir/sqrt.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/sqrt.c
+build $builddir/dot.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/dot.c
+build $builddir/MpcData.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/MpcData.c
+build $builddir/RiccatiLinearSolver.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/RiccatiLinearSolver.c
+build $builddir/FullFeasibility.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/FullFeasibility.c
+build $builddir/FullResidual.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/FullResidual.c
+build $builddir/FullVariable.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/FullVariable.c
+build $builddir/mldivide.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/mldivide.c
+build $builddir/xgetrf.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/xgetrf.c
+build $builddir/warning.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/warning.c
+build $builddir/chol.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/chol.c
+build $builddir/mrdivide_helper.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/mrdivide_helper.c
+build $builddir/linsolve.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/linsolve.c
+build $builddir/trisolve.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/trisolve.c
+build $builddir/_coder_fbstab_mpc_api.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/interface/_coder_fbstab_mpc_api.c
+build $builddir/_coder_fbstab_mpc_mex.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/interface/_coder_fbstab_mpc_mex.c
+build $builddir/fbstab_mpc_emxutil.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/fbstab_mpc_emxutil.c
+build $builddir/_coder_fbstab_mpc_info.o : cc C$:/Users/tskib/OneDrive/PhD/Research/Matlab/MoWiTO_mpc_matlab/fbstab-matlab-master/codegen/mex/fbstab_mpc/interface/_coder_fbstab_mpc_info.c
+build $builddir/c_mexapi_version.o : cc C$:/Program$ Files/MATLAB/R2019b/extern/version/c_mexapi_version.c
+
+# Link
+build $root\fbstab_mpc_mex.mexw64 : link $builddir\rt_nonfinite.o $builddir\fbstab_mpc_mexutil.o $builddir\fbstab_mpc_data.o $builddir\fbstab_mpc_initialize.o $builddir\fbstab_mpc_terminate.o $builddir\fbstab_mpc.o $builddir\eml_int_forloop_overflow_check.o $builddir\CondensedMpcData.o $builddir\mtimes.o $builddir\ImplicitConjugateGradient.o $builddir\CondensedFeasibility.o $builddir\CondensedResidual.o $builddir\CondensedVariable.o $builddir\FBstabAlgorithm.o $builddir\norm.o $builddir\sqrt.o $builddir\dot.o $builddir\MpcData.o $builddir\RiccatiLinearSolver.o $builddir\FullFeasibility.o $builddir\FullResidual.o $builddir\FullVariable.o $builddir\mldivide.o $builddir\xgetrf.o $builddir\warning.o $builddir\chol.o $builddir\mrdivide_helper.o $builddir\linsolve.o $builddir\trisolve.o $builddir\_coder_fbstab_mpc_api.o $builddir\_coder_fbstab_mpc_mex.o $builddir\fbstab_mpc_emxutil.o $builddir\_coder_fbstab_mpc_info.o $builddir\c_mexapi_version.o 

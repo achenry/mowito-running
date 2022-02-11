@@ -1,0 +1,8 @@
+*.mat 
+wind_series/ 
+FAST8/ 
+FAST8model/ 
+gm_T_Wind_Files_v0/ 
+results/ 
+horizon_length_results/ 
+*.csv 

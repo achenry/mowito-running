@@ -1,0 +1,20 @@
+MEX {
+	global:
+		mexFunction;
+		mexfilerequiredapiversion;
+		emlrtMexFcnProperties;
+		fbstab_mpc_initialize;
+		fbstab_mpc_terminate;
+		fbstab_mpc_atexit;
+		fbstab_mpc;
+		emlrt_marshallOut;
+		b_emlrt_marshallIn;
+		v_emlrt_marshallIn;
+		emxEnsureCapacity_real_T;
+		emxInitStruct_CondensedMpcData;
+		emxInit_real_T;
+		emxFree_real_T;
+		emxFreeStruct_CondensedMpcData;
+	local:
+		*;
+};
